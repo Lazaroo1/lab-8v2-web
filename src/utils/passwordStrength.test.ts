@@ -39,7 +39,7 @@ describe('passwordStrength', () => {
     })
 
     it('counts spaces as characters', () => {
-      expect(passwordStrength('ab cd ef1')).toBe('fuerte')
+      expect(passwordStrength('ab cd ef1')).toBe('muy fuerte')
     })
   })
 
