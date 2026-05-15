@@ -30,8 +30,8 @@ describe('passwordStrength', () => {
       expect(passwordStrength('ABCDE123!')).toBe('muy fuerte')
     })
 
-    it('returns "muy fuerte" for mixed case, number, and symbol', () => {
-      expect(passwordStrength('abcABC1!')).toBe('muy fuerte')
+    it('returns "máximo" for mixed case, number, and symbol', () => {
+      expect(passwordStrength('abcABC1!')).toBe('máximo')
     })
 
     it('returns "débil" for symbols only with fewer than 8 characters', () => {
@@ -52,6 +52,24 @@ describe('passwordStrength', () => {
     it('does not return "media" for exactly 7 characters', () => {
       expect(passwordStrength('abcdefg')).not.toBe('media')
       expect(passwordStrength('abcdefg')).toBe('débil')
+    })
+  })
+
+  describe('mixed case rule', () => {
+    it('returns "muy fuerte" for lowercase with a number and symbol', () => {
+      expect(passwordStrength('abcdefg1!')).toBe('muy fuerte')
+    })
+
+    it('returns "máximo" for uppercase and lowercase with a number and symbol', () => {
+      expect(passwordStrength('Abcdefg1!')).toBe('máximo')
+    })
+
+    it('returns "muy fuerte" for uppercase only with a number and symbol', () => {
+      expect(passwordStrength('ABCDEFG1!')).toBe('muy fuerte')
+    })
+
+    it('returns "máximo" for alternating uppercase and lowercase with a number and symbol', () => {
+      expect(passwordStrength('AbCdEfG1!')).toBe('máximo')
     })
   })
 

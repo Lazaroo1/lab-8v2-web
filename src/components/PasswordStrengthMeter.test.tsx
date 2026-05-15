@@ -54,6 +54,15 @@ describe('PasswordStrengthMeter', () => {
       expect(screen.getByRole('status')).toHaveTextContent('muy fuerte')
     })
 
+    it('shows "máximo" after typing mixed case with a number and symbol', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+
+      await user.type(screen.getByLabelText(/contraseña/i), 'Abcdefg1!')
+
+      expect(screen.getByRole('status')).toHaveTextContent('máximo')
+    })
+
     it('shows "vacía" again after clearing the input', async () => {
       const user = userEvent.setup()
       render(<PasswordStrengthMeter />)
@@ -107,6 +116,15 @@ describe('PasswordStrengthMeter', () => {
       await user.type(screen.getByLabelText(/contraseña/i), 'abcdefg1!')
 
       expect(screen.getByRole('progressbar')).toHaveAttribute('value', '4')
+    })
+
+    it('shows 5 out of 5 when strength is "máximo"', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+
+      await user.type(screen.getByLabelText(/contraseña/i), 'Abcdefg1!')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('value', '5')
     })
   })
 

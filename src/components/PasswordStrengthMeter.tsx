@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { passwordStrength } from '../utils/passwordStrength'
+import { passwordStrength, type PasswordStrength } from '../utils/passwordStrength'
 
-function progressValueFor(strength: string): number {
+function progressValueFor(strength: PasswordStrength): number {
   switch (strength) {
     case 'débil':
       return 1
@@ -11,6 +11,8 @@ function progressValueFor(strength: string): number {
       return 3
     case 'muy fuerte':
       return 4
+    case 'máximo':
+      return 5
     default:
       return 0
   }
