@@ -66,6 +66,50 @@ describe('PasswordStrengthMeter', () => {
     })
   })
 
+  describe('progress bar', () => {
+    it('shows value 0 when strength is "vacía"', () => {
+      render(<PasswordStrengthMeter />)
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('value', '0')
+    })
+
+    it('shows 1 out of 5 when strength is "débil"', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+
+      await user.type(screen.getByLabelText(/contraseña/i), 'abc')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('value', '1')
+    })
+
+    it('shows 2 out of 5 when strength is "media"', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+
+      await user.type(screen.getByLabelText(/contraseña/i), 'abcdefgh')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('value', '2')
+    })
+
+    it('shows 3 out of 5 when strength is "fuerte"', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+
+      await user.type(screen.getByLabelText(/contraseña/i), 'abcdefg1')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('value', '3')
+    })
+
+    it('shows 4 out of 5 when strength is "muy fuerte"', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+
+      await user.type(screen.getByLabelText(/contraseña/i), 'abcdefg1!')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('value', '4')
+    })
+  })
+
   describe('edge cases', () => {
     it('does not show "débil" for exactly 8 characters without a number', async () => {
       const user = userEvent.setup()
